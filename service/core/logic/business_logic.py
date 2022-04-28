@@ -13,6 +13,7 @@ python -m logic.business_logic
 import math
 import time
 import random
+import os
 
 max_range = 2500000000000
 
@@ -44,11 +45,14 @@ def run_prime_factor_calculation():
 
     return n, largest_prime_factor, elapsed_time
 
+def read_env():
+    default_message = os.environ['DEFAULT_MESSAGE']
+    return default_message
 
 if __name__ == "__main__":
 
     n, largest_prime_factor, elapsed_time = run_prime_factor_calculation()
 
     print(
-        f"The largest prime factor of {n} is {largest_prime_factor}. Calculation took {elapsed_time:0.3f} seconds."
+        read_env()
     )

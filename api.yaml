@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: kf-api
-          image: javavolker/kubernetes-fastapi:0.0.1
+          image: javavolker/kubernetes-fastapi:0.0.4
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
@@ -43,3 +43,33 @@ spec:
             # based on CPU utilization
             requests:
               cpu: "250m"
+          volumeMounts:
+            - name: config
+              mountPath: "/config"
+              readOnly: true
+          env:
+            - name: DEFAULT_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-fastapi-config
+                  key: default_message
+            - name: MSG1
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-fastapi-config
+                  key: message_1_template
+            - name: MSG2
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-fastapi-config
+                  key: message_2_template
+      volumes:
+        # You set volumes at the Pod level, then mount them into containers inside that Pod
+        - name: config
+          configMap:
+            # Provide the name of the ConfigMap you want to mount.
+            name: k8s-fastapi-config
+            # An array of keys from the ConfigMap to create as files
+            items:
+              - key: "user-interface.properties"
+                path: "user-interface.properties"

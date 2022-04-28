@@ -1,4 +1,4 @@
-VERSION=0.0.1
+VERSION=0.0.4
 OWNER=javavolker
 PROJECT=kubernetes-fastapi
 build:
@@ -9,3 +9,5 @@ dockerLogin:
 	docker login --username $(OWNER)
 push:
 	docker push $(OWNER)/$(PROJECT):$(VERSION)
+freshDeploy:
+	build push kubectl apply -f api.yaml

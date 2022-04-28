@@ -1,0 +1,23 @@
+#
+# https://kubernetes.io/docs/concepts/configuration/configmap/
+#
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-fastapi-config
+  version: 1
+data:
+  # property-like keys; each key maps to a simple value
+  default_message: " selber Hey!"
+  message_2_template: "The largest prime factor of %s is %s. Calculation took %s seconds."
+  message_1_template: "Hallo Welt"
+  ui_properties_file_name: "user-interface.properties"
+  kf_properties_file_name: "kf-api.properties"
+
+  # file-like keys
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true   
+  kf-api.properties: |
+    text.msg="Hallo, Du!" 
